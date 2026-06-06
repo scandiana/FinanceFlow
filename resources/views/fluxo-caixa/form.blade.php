@@ -17,7 +17,7 @@
 
 <div class="card" style="max-width:40rem;">
     <div class="card-body">
-        <form method="POST" action="{{ $movimentacao ? route('fluxo-caixa.update', $movimentacao['id']) : route('fluxo-caixa.store') }}">
+        <form method="POST" action="{{ $movimentacao ? route('fluxo-caixa.update', $movimentacao['id']) : route('fluxo-caixa.store') }}" enctype="multipart/form-data">
             @csrf
             @if($movimentacao) @method('PUT') @endif
             <input type="hidden" name="tipo" value="{{ $tipo }}">
@@ -63,6 +63,23 @@
                     </select>
                 </div>
             @endif
+              <!-- INÍCIO DO NOVO CAMPO DE ANEXO -->
+              <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="nota_fiscal" style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Anexar Nota Fiscal / Comprovante (PDF, PNG, JPG)</label>
+                <input 
+                    type="file" 
+                    id="nota_fiscais" 
+                    name="nota_fiscais[]" 
+                    class="form-control" 
+                    accept=".pdf,.jpg,.jpeg,.png" 
+                    multiple
+                >
+                <small class="text-muted">
+                      Você pode selecionar mais de um arquivo (PDF, PNG ou JPG).
+                    </small>
+            </div>
+            <!-- FIM DO NOVO CAMPO DE ANEXO -->
+
             <div class="btn-group">
                 <button type="submit" class="btn btn-primary">Salvar</button>
                 <a href="{{ route('fluxo-caixa.index') }}" class="btn btn-outline">Cancelar</a>
