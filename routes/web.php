@@ -6,13 +6,19 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FluxoCaixaController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/dashboard');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth.session')->group(function () {
+    Route::redirect('/', '/dashboard');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::prefix('fluxo-caixa')->name('fluxo-caixa.')->group(function () {
     Route::get('/', [FluxoCaixaController::class, 'index'])->name('index');
@@ -65,4 +71,5 @@ Route::prefix('usuarios')->name('usuarios.')->group(function () {
     Route::put('/{usuario}', [UsuarioController::class, 'update'])->name('update');
     Route::delete('/{usuario}', [UsuarioController::class, 'destroy'])->name('destroy');
     Route::post('/trocar-perfil', [UsuarioController::class, 'trocarPerfil'])->name('trocar-perfil');
+});
 });

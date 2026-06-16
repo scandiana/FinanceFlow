@@ -37,7 +37,10 @@
                     </select>
                     <button type="submit" class="btn btn-primary btn-sm" style="margin-top:0.5rem;width:100%;">Aplicar perfil</button>
                 </form>
-                <a href="{{ route('dashboard') }}" class="danger">Sair (simulado)</a>
+                <form action="{{ route('logout') }}" method="POST" style="margin:0;">
+                    @csrf
+                    <button type="submit" class="danger" style="background:none;border:none;cursor:pointer;padding:0;font-size:inherit;color:inherit;width:100%;text-align:left;">Sair</button>
+                </form>
             </div>
         </details>
     </div>
