@@ -10,6 +10,11 @@
     </form>
 
     <div class="navbar-actions">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
+            <svg class="icon-light" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m9-6.5L9.5 9.5m5 5L14.5 14.5M9.5 9.5 12 12l2.5-2.5m-5 5L12 12l2.5 2.5"/><circle cx="12" cy="12" r="3.5"/></svg>
+            <svg class="icon-dark" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        </button>
+
         <a href="{{ route('fluxo-caixa.index') }}" class="btn btn-outline btn-sm" title="Notificações">
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         </a>

@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
     const toggleBtn = document.getElementById('sidebar-toggle');
+    const themeToggle = document.getElementById('theme-toggle');
 
     const openSidebar = () => {
         sidebar?.classList.add('open');
@@ -31,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeSidebar();
             }
         });
+    });
+
+    themeToggle?.addEventListener('click', () => {
+        const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme);
     });
 
     document.querySelectorAll('[data-modal-open]').forEach((btn) => {
@@ -67,6 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initCharts();
     showSessionToast();
 });
+
+function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('financeflow-theme', theme);
+}
+
+function initTheme() {
+    const saved = localStorage.getItem('financeflow-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = saved || (prefersDark ? 'dark' : 'light');
+    applyTheme(theme);
+}
+
+initTheme();
 
 function showSessionToast() {
     const container = document.getElementById('toast-container');
