@@ -122,7 +122,10 @@ class MovimentacaoStore
 
         return $avulsas->merge($fixas)
             ->map(fn ($m) => self::enrich($m))
-            ->sortByDesc('data')
+            ->sortBy([
+                ['data', 'desc'],
+                ['id', 'desc'],
+            ])
             ->values();
     }
 
@@ -198,6 +201,24 @@ class MovimentacaoStore
             'status' => $input['status'] ?? 'concluido',
             'recorrente' => false,
             'usuario_id' => MockData::usuarioLogado()['id'],
+            'nota_fiscais' => collect($input['nota_fiscais'] ?? [])
+    ->filter()
+    ->map(function ($file) {
+
+        // se vier arquivo do upload
+        if ($file instanceof \Illuminate\Http\UploadedFile) {
+            $name = time().'_'.$file->getClientOriginalName();
+
+            $file->move(public_path('uploads/nfs'), $name);
+
+            return $name;
+        }
+
+        // fallback (caso já venha string)
+        return $file;
+    })
+    ->values()
+    ->toArray(),
         ]);
 
         $lista = session(self::SESSION_KEY, []);
@@ -239,7 +260,7 @@ class MovimentacaoStore
             'valor' => $valor,
             'tipo' => $tipo,
             'status' => $input['status'] ?? $atual['status'],
-        ]));
+            'nota_fiscais' => $input['nota_fiscais'] ?? ($atual['nota_fiscais'] ?? []),      ]));
 
         $lista[$index] = $atualizado;
         session([self::SESSION_KEY => $lista->values()->all()]);
@@ -313,6 +334,16 @@ class MovimentacaoStore
     public static function isFixa(string|int $id): bool
     {
         return is_string($id) && str_starts_with($id, 'fixa-');
+    }
+
+    public static function podeEditar(string|int $id): bool
+    {
+        return ! self::isFixa($id);
+    }
+
+    public static function podeExcluir(string|int $id): bool
+    {
+        return ! self::isFixa($id);
     }
 
     private static function periodoFixas(?Request $request): array

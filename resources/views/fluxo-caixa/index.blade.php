@@ -93,7 +93,9 @@
             <thead>
                 <tr>
                     <th>Data</th><th>Descrição</th><th>Categoria</th><th>Conta</th><th>Tipo</th>
-                    <th class="text-right">Valor</th><th class="text-center">Status</th><th class="text-center">Ações</th>
+                    <th class="text-right">Valor</th><th class="text-center">Status</th>
+                    <th class="text-center">NF</th> <!-- Nova coluna adicionada aqui -->
+                    <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -127,11 +129,12 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="8" class="empty-state">Nenhuma movimentação encontrada.</td></tr>
+                    <tr><td colspan="9" class="empty-state">Nenhuma movimentação encontrada.</td></tr>
                 @endforelse
             </tbody>
         </table>
     </div>
+
     <div class="mobile-card-list">
         @foreach($movimentacoes as $m)
             <div class="mobile-card">
@@ -140,7 +143,7 @@
                 <p class="{{ $m['valor'] >= 0 ? 'text-success' : 'text-danger' }}" style="font-weight:600;">{{ \App\Data\MockData::formatMoney(abs($m['valor'])) }}</p>
                 <div class="btn-group" style="margin-top:0.5rem;">
                     <a href="{{ route('fluxo-caixa.show', $m['id']) }}" class="btn btn-outline btn-sm">Ver</a>
-                    @if(\App\Data\MockData::podeEditar())
+                    @if(\App\Data\MovimentacaoStore::podeEditar($m['id']))
                         <a href="{{ route('fluxo-caixa.edit', $m['id']) }}" class="btn btn-outline btn-sm">Editar</a>
                     @endif
                 </div>

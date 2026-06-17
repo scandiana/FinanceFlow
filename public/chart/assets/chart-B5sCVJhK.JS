@@ -1,0 +1,1 @@
+import{c as r,j as e,r as t,M as d}from"./Modern3DChartBackground-DJJTo5Bp.js";r.createRoot(document.getElementById("root")).render(e.jsx(t.StrictMode,{children:e.jsx("div",{style:{width:"100vw",height:"100vh",background:"linear-gradient(135deg, #ffffff 0%, #f1f5f9 60%, #e8edf2 100%)"},children:e.jsx(d,{})})}));
