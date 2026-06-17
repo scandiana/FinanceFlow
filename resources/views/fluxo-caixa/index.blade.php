@@ -101,25 +101,29 @@
                     <tr>
                         <td>{{ \App\Data\MockData::formatDate($m['data']) }}</td>
                         <td>
-                            <a href="{{ route('fluxo-caixa.show', $m['id']) }}">{{ $m['descricao'] }}</a>
-                            @if(!empty($m['recorrente']))
-                                <span class="badge badge-info" style="margin-left:0.25rem;">Fixa mensal</span>
-                            @endif
+                            <span class="description-inline">
+                                <a href="{{ route('fluxo-caixa.show', $m['id']) }}">{{ $m['descricao'] }}</a>
+                                @if(!empty($m['recorrente']))
+                                    <span class="badge badge-info">Fixa mensal</span>
+                                @endif
+                            </span>
                         </td>
                         <td>{{ $m['categoria'] }}</td>
                         <td>{{ $m['conta'] }}</td>
                         <td><span class="badge {{ $m['tipo'] === 'receita' ? 'badge-success' : 'badge-danger' }}">{{ ucfirst($m['tipo']) }}</span></td>
                         <td class="text-right {{ $m['valor'] >= 0 ? 'text-success' : 'text-danger' }}">{{ \App\Data\MockData::formatMoney(abs($m['valor'])) }}</td>
                         <td class="text-center"><span class="badge badge-muted">{{ ucfirst($m['status']) }}</span></td>
-                        <td class="text-center actions-inline">
-                            <a href="{{ route('fluxo-caixa.show', $m['id']) }}" class="btn btn-outline btn-sm">Ver</a>
-                            @if(\App\Data\MockData::podeEditar() && empty($m['recorrente']))
-                                <a href="{{ route('fluxo-caixa.edit', $m['id']) }}" class="btn btn-outline btn-sm">Editar</a>
-                                <form action="{{ route('fluxo-caixa.destroy', $m['id']) }}" method="POST" style="display:inline;">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" data-confirm="Excluir esta movimentação?">Excluir</button>
-                                </form>
-                            @endif
+                        <td class="text-center actions-col">
+                            <div class="actions-inline">
+                                <a href="{{ route('fluxo-caixa.show', $m['id']) }}" class="btn btn-outline btn-sm">Ver</a>
+                                @if(\App\Data\MockData::podeEditar() && empty($m['recorrente']))
+                                    <a href="{{ route('fluxo-caixa.edit', $m['id']) }}" class="btn btn-outline btn-sm">Editar</a>
+                                    <form class="actions-form" action="{{ route('fluxo-caixa.destroy', $m['id']) }}" method="POST">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" data-confirm="Excluir esta movimentação?">Excluir</button>
+                                    </form>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty
