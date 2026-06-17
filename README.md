@@ -1,85 +1,241 @@
-# FinanceFlow — Gestão Financeira Empresarial
+# FinanceFlow
 
-Interface web completa (camada de apresentação) para sistema de gestão financeira, baseada no wireframe **FinanceFlow**. Desenvolvida em **Laravel** com padrão **MVC**, dados simulados e rotas funcionais — pronta para integração futura com MySQL, Models e APIs REST.
+Sistema web de gestão financeira empresarial desenvolvido em Laravel, projetado para centralizar o controle de receitas, despesas, contas bancárias, cartões, clientes e relatórios gerenciais.
 
-## Requisitos
+O projeto foi construído seguindo o padrão MVC e possui uma arquitetura preparada para integração com banco de dados MySQL, APIs REST e futuras regras de negócio.
 
-- PHP 8.2+
-- Composer
-- Extensão PHP `fileinfo` recomendada (ou `composer install --ignore-platform-req=ext-fileinfo`)
+---
+
+## Visão Geral
+
+O FinanceFlow tem como objetivo fornecer uma interface moderna para acompanhamento financeiro corporativo, permitindo:
+
+* Controle de fluxo de caixa
+* Gestão de contas bancárias
+* Gestão de cartões
+* Cadastro de clientes
+* Organização por categorias financeiras
+* Relatórios gerenciais
+* Dashboard consolidado de indicadores
+
+---
+
+## Tecnologias Utilizadas
+
+### Backend
+
+* PHP 8.3
+* Laravel 13
+* Eloquent ORM
+* API REST
+
+### Frontend
+
+* Blade Templates
+* JavaScript
+* Chart.js
+* CSS Responsivo
+
+### Banco de Dados
+
+* MySQL
+
+### Arquitetura
+
+* MVC (Model / View / Controller)
+* Controllers
+* Models
+* Migrations
+* API Layer
+
+---
+
+## Funcionalidades
+
+### Dashboard
+
+* Resumo financeiro
+* Indicadores principais
+* Gráficos de receitas e despesas
+* Alertas financeiros
+* Próximos vencimentos
+
+### Fluxo de Caixa
+
+* Registro de movimentações
+* Filtros por período
+* Busca por descrição
+* Controle de receitas e despesas
+
+### Contas Bancárias
+
+* Cadastro de contas
+* Histórico de movimentações
+* Consulta de saldo
+* Transferências
+
+### Cartões
+
+* Controle de cartões
+* Compras registradas
+* Parcelamentos
+* Faturas
+
+### Clientes
+
+* Cadastro
+* Consulta
+* Histórico financeiro
+
+### Categorias
+
+* Organização de receitas
+* Organização de despesas
+
+### Relatórios
+
+* Fluxo consolidado
+* Receitas por período
+* Despesas por período
+* Exportação futura
+
+---
+
+## Estrutura do Projeto
+
+```text
+app/
+├── Http/
+│   ├── Controllers/
+│   └── Middleware/
+├── Models/
+├── Data/
+├── Providers/
+
+database/
+├── migrations/
+├── seeders/
+
+resources/
+├── views/
+├── css/
+└── js/
+
+routes/
+├── web.php
+└── api.php
+```
+
+---
 
 ## Instalação
 
+### Pré-requisitos
+
+* PHP 8.3+
+* Composer
+* MySQL
+* Node.js (opcional para build de assets)
+
+### Passos
+
 ```bash
+git clone <repositorio>
+
+cd FinanceFlow
+
 composer install
-cp .env.example .env   # se necessário
+
+cp .env.example .env
+
 php artisan key:generate
+```
+
+Configure o banco de dados no arquivo `.env`.
+
+Execute as migrations:
+
+```bash
+php artisan migrate
+```
+
+Inicie o servidor:
+
+```bash
 php artisan serve
 ```
 
-Acesse: http://127.0.0.1:8000/dashboard
+Acesse:
 
-## O que está implementado
-
-- **Dashboard** — indicadores, gráficos (Chart.js), vencimentos, alertas, contas e movimentações
-- **Fluxo de caixa** — listagem, filtros, busca, paginação, CRUD simulado
-- **Contas bancárias** — cards, detalhes, histórico, transferências
-- **Cartões** — faturas, compras, parcelamentos
-- **Clientes** — CRUD e perfil com histórico financeiro
-- **Categorias** — CRUD (receita/despesa)
-- **Relatórios** — receitas, despesas, fluxo consolidado, exportação PDF simulada
-- **Usuários** — listagem, cadastro, edição, perfis e restrições visuais simuladas
-
-## O que NÃO está implementado (por design)
-
-- Persistência em banco de dados
-- Autenticação real
-- Regras de negócio definitivas
-- Geração real de PDF
-
-## Estrutura para integração futura
-
-```
-app/
-├── Data/MockData.php          # Substituir por Models + seeders
-├── Http/Controllers/          # Conectar a services/repositories
-└── Models/                    # (criar) User, Cliente, Conta, etc.
-
-resources/views/
-├── layouts/
-├── components/
-├── dashboard/
-├── fluxo-caixa/
-├── contas/
-├── cartoes/
-├── clientes/
-├── categorias/
-├── relatorios/
-└── usuarios/
-
-public/css/app.css
-public/js/app.js
-routes/web.php
+```text
+http://127.0.0.1:8000
 ```
 
-### Nomenclatura de campos (MySQL)
+---
 
-`id`, `nome`, `descricao`, `valor`, `saldo`, `categoria_id`, `cliente_id`, `conta_id`, `usuario_id`, `created_at`, `updated_at`
+## API
 
-## Simular perfis de acesso
+O projeto possui estrutura preparada para APIs REST.
 
-No menu do usuário (canto superior direito), altere **Simular perfil**:
+Principais recursos:
 
-- **Administrador** — acesso total
-- **Financeiro** — edição sem gestão de usuários
-- **Visualização** — somente leitura (botões de edição ocultos)
+* Transactions
+* Categories
+* Clients
+* Cards
+* Bank Accounts
 
-## Responsividade
+As rotas encontram-se em:
 
-- Desktop: sidebar fixa
-- Tablet: sidebar compacta
-- Mobile: menu hambúrguer, tabelas com cards empilhados
+```text
+routes/api.php
+```
+
+---
+
+## Status do Projeto
+
+### Implementado
+
+* Estrutura Laravel
+* Models
+* Migrations
+* Dashboard
+* Fluxo de Caixa
+* Clientes
+* Categorias
+* Cartões
+* Contas Bancárias
+* Relatórios
+
+### Em Desenvolvimento
+
+* Autenticação
+* Controle de permissões
+* Exportação de PDF
+* Integração completa com banco
+* Regras de negócio avançadas
+
+---
+
+## Roadmap
+
+### Versão 1.0
+
+* Autenticação
+* Controle de usuários
+* Integração total com banco
+
+### Versão 1.1
+
+* Exportação PDF
+* Dashboard avançado
+* Indicadores financeiros
+
+---
 
 ## Licença
 
-Projeto de demonstração / protótipo de interface.
+Projeto acadêmico e demonstrativo desenvolvido para fins educacionais e de prototipação.
+
+---
